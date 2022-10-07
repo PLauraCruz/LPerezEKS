@@ -71,3 +71,14 @@
         }
     </div>
 </div>
+<script>
+    function readURL(input) {
+        if (input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (img) {
+                $("#ImagenPreview").attr('src', img.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

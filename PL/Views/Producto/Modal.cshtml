@@ -16,9 +16,19 @@
             <div class="modal-body">
                 <h5>@ViewBag.Mensaje</h5>
             </div>
-            <div class="modal-footer">
-                @Html.ActionLink("Regresar", "Getall", "Producto", htmlAttributes: new { @class = "btn btn-danger" })
-            </div>
+            @if (Session["Token"] != null)
+            {
+                <div class="modal-footer">
+                    @Html.ActionLink("Regresar", "Getall", "Producto", htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+            }
+            else
+            {
+                <div class="modal-footer">
+                    @Html.ActionLink("Regresar", "Login", "Login", htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+
+            }
         </div>
     </div>
 </div>

@@ -14,7 +14,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <hr/>
+        <hr />
     </div>
 </div>
 <div class="row">
@@ -31,22 +31,26 @@
             <div class="col">
                 <div class="col-md-4 col-12 col-sm-6">
                     @Html.LabelFor(model => model.Nombre)
-                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')" })
                     @Html.ValidationMessageFor(model => model.Nombre)
+                    <label id="lblErrorNombre"></label>
                 </div>
             </div>
             <div class="col">
                 <div class="col-md-4 col-12 col-sm-6">
                     @Html.LabelFor(model => model.ApellidoPaterno)
-                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(event, 'lblErrorApellidoPaterno')" })
                     @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                    <label id="lblErrorApellidoPaterno"></label>
                 </div>
             </div>
             <div class="col">
                 <div class="col-md-4 col-12 col-sm-6">
                     @Html.LabelFor(model => model.ApellidoMaterno)
-                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" })
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(event, 'lblErrorApellidoMaterno')" })
                     @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                    <label id="lblErrorApellidoMaterno"></label>
+
                 </div>
             </div>
             <div class="col">
@@ -59,8 +63,9 @@
             <div class="col">
                 <div class="col-md-4 col-12 col-sm-6">
                     @Html.LabelFor(model => model.Password)
-                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @id = "txtPassword" })
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @id = "txtPassword", @onblur = "return ValidacionPassword(event, 'lblErrorPassword')" })
                     @Html.ValidationMessageFor(model => model.Password)
+                    <label id="lblErrorPassword"></label>
                 </div>
             </div>
             <div class="col">
@@ -84,8 +89,9 @@
             <div class="col">
                 <div class="col-md-4 col-12 col-sm-6">
                     @Html.LabelFor(model => model.Telefono)
-                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono" })
+                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono", @onkeypress = "return SoloNumeros(event, 'lblErrorTelefono')" })
                     @Html.ValidationMessageFor(model => model.Telefono)
+                    <label id="lblErrorTelefono"></label>
                 </div>
             </div>
             <div class="col-md-3">
@@ -96,3 +102,44 @@
         }
     </div>
 </div>
+<script type="text/javascript">
+    function SoloLetras(e, controlId) {
+        var caracter = e.key;
+        if (!/^[a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g.test(caracter)) {
+            $('#' + controlId).text("Solo se aceptan letras");
+            $('#' + controlId).css({ "color": "red" });
+            return false;
+        }
+        else {
+            $('#' + controlId).text("");
+            return true;
+        }
+    }
+    function SoloNumeros(e, controlId) {
+        var caracter = e.key;
+        if (!/^[0-9]/g.test(caracter)) {
+            $('#' + controlId).text("Solo se aceptan numeros");
+            $('#' + controlId).css({ "color": "red" });
+            return false;
+        }
+        else {
+            $('#' + controlId).text("");
+            return true;
+        }
+    }
+    function ValidacionPassword(e, controlId) {
+
+        var myregex = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/;
+        if (myregex.test($('#txtPassword').val().trim())) {
+            $('#lblErrorPassword').text("Password correcto");
+            $('#lblErrorPassword').css({ "color": "green" });
+
+        }
+        else {
+            $('#lblErrorPassword').text("Ingrese un password valido(1 mayuscula, 1 caracter, 1 numero, 1 minuscula)");
+            $('#lblErrorPassword').css({ "color": "red" });
+
+
+        }
+    }
+</script>
